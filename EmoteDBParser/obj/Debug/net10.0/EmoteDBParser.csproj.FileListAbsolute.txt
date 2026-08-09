@@ -1,0 +1,12 @@
+C:\Users\Mizuki\Downloads\aushkd\EmoteDBParser\EmoteDBParser\bin\Debug\net10.0\EmoteDBParser.deps.json
+C:\Users\Mizuki\Downloads\aushkd\EmoteDBParser\EmoteDBParser\bin\Debug\net10.0\EmoteDBParser.dll
+C:\Users\Mizuki\Downloads\aushkd\EmoteDBParser\EmoteDBParser\bin\Debug\net10.0\EmoteDBParser.pdb
+C:\Users\Mizuki\Downloads\aushkd\EmoteDBParser\EmoteDBParser\obj\Debug\net10.0\EmoteDBParser.csproj.AssemblyReference.cache
+C:\Users\Mizuki\Downloads\aushkd\EmoteDBParser\EmoteDBParser\obj\Debug\net10.0\EmoteDBParser.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mizuki\Downloads\aushkd\EmoteDBParser\EmoteDBParser\obj\Debug\net10.0\EmoteDBParser.AssemblyInfoInputs.cache
+C:\Users\Mizuki\Downloads\aushkd\EmoteDBParser\EmoteDBParser\obj\Debug\net10.0\EmoteDBParser.AssemblyInfo.cs
+C:\Users\Mizuki\Downloads\aushkd\EmoteDBParser\EmoteDBParser\obj\Debug\net10.0\EmoteDBParser.csproj.CoreCompileInputs.cache
+C:\Users\Mizuki\Downloads\aushkd\EmoteDBParser\EmoteDBParser\obj\Debug\net10.0\EmoteDBParser.dll
+C:\Users\Mizuki\Downloads\aushkd\EmoteDBParser\EmoteDBParser\obj\Debug\net10.0\refint\EmoteDBParser.dll
+C:\Users\Mizuki\Downloads\aushkd\EmoteDBParser\EmoteDBParser\obj\Debug\net10.0\EmoteDBParser.pdb
+C:\Users\Mizuki\Downloads\aushkd\EmoteDBParser\EmoteDBParser\obj\Debug\net10.0\ref\EmoteDBParser.dll

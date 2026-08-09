@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="EmoteDBParser.App/App.axaml" value="EmoteDBParser.App/EmoteDBParser.App.csproj" />
+        <entry key="EmoteDBParser.App/Views/MainWindow.axaml" value="EmoteDBParser.App/EmoteDBParser.App.csproj" />
+        <entry key="EmoteDBParser.App/Views/SettingsWindow.axaml" value="EmoteDBParser.App/EmoteDBParser.App.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

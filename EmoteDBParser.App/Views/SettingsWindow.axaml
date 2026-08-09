@@ -1,0 +1,80 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="EmoteDBParser.App.Views.SettingsWindow"
+        Title="Settings"
+        Width="600" Height="400"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"
+        Background="#101114"
+        Foreground="#E4E5EA">
+
+    <Grid RowDefinitions="*,Auto">
+        <DockPanel Grid.Row="0" Margin="20" LastChildFill="True">
+            <ScrollViewer DockPanel.Dock="Top">
+                <StackPanel Spacing="20">
+                    
+                    <Border BorderBrush="#26272C" BorderThickness="0,0,0,1" Padding="0,0,0,16">
+                        <StackPanel Spacing="12">
+                            <TextBlock Text="Pak Folder Configuration" FontSize="16" FontWeight="Bold" Foreground="White" />
+                            
+                            <Grid ColumnDefinitions="120,*,Auto">
+                                <TextBlock Grid.Column="0" Text="Pak Folder Path:" VerticalAlignment="Center" Foreground="#C9CAD0" />
+                                <TextBox Grid.Column="1" Text="{Binding PakFolderPath, Mode=TwoWay}"
+                                         Watermark="Path to the folder containing .pak/.utoc/.ucas files" Margin="0,0,8,0" />
+                                <Button Grid.Column="2" Content="Browse…" Command="{Binding BrowsePakFolderCommand}" />
+                            </Grid>
+                            
+                            <Grid ColumnDefinitions="120,*">
+                                <TextBlock Grid.Column="0" Text="Status:" VerticalAlignment="Center" Foreground="#C9CAD0" />
+                                <TextBlock Grid.Column="1" Text="{Binding FolderStatusText}" Foreground="#8F9099" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <Border BorderBrush="#26272C" BorderThickness="0,0,0,1" Padding="0,0,0,16">
+                        <StackPanel Spacing="12">
+                            <TextBlock Text="Automatic Loading" FontSize="16" FontWeight="Bold" Foreground="White" />
+                            
+                            <CheckBox Content="Automatically load emotes when app starts" 
+                                      IsChecked="{Binding AutoLoadEnabled, Mode=TwoWay}"
+                                      Foreground="#C9CAD0" />
+                            
+                            <TextBlock Text="If enabled, emotes will be loaded automatically on startup using the configured pak folder."
+                                       FontSize="12" Foreground="#8F9099" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Border>
+                    
+                    <Border BorderBrush="#26272C" BorderThickness="0,0,0,1" Padding="0,0,0,16">
+                        <StackPanel Spacing="12">
+                            <TextBlock Text="Output Settings" FontSize="16" FontWeight="Bold" Foreground="White" />
+                            
+                            <RadioButton Content="Use system temp folder (auto-deleted on close)"
+                                         GroupName="OutputMode" IsChecked="{Binding UseSystemTemp, Mode=TwoWay}"
+                                         Foreground="#C9CAD0" />
+                            
+                            <RadioButton Content="Use custom folder (session subfolder auto-deleted on close)"
+                                         GroupName="OutputMode" IsChecked="{Binding !UseSystemTemp, Mode=TwoWay}"
+                                         Foreground="#C9CAD0" />
+                            
+                            <Grid ColumnDefinitions="120,*,Auto" IsVisible="{Binding !UseSystemTemp}" Margin="20,8,0,0">
+                                <TextBlock Grid.Column="0" Text="Custom Path:" VerticalAlignment="Center" Foreground="#C9CAD0" />
+                                <TextBox Grid.Column="1" Text="{Binding CustomOutputFolder, Mode=TwoWay}"
+                                         Watermark="Base folder for session output" Margin="0,0,8,0" />
+                                <Button Grid.Column="2" Content="Browse…" Command="{Binding BrowseOutputFolderCommand}" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </DockPanel>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto" Margin="20,0,20,20">
+            <TextBlock Grid.Column="0" Text="{Binding SaveStatusText}" Foreground="#8F9099" VerticalAlignment="Center" />
+            <Button Grid.Column="1" Content="Cancel" Click="OnCancel" Padding="16,8" Margin="0,0,8,0" />
+            <Button Grid.Column="2" Content="Save" Click="OnSave" Padding="16,8" Background="#4FC3F7" Foreground="#101114" FontWeight="Bold" />
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,154 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:conv="using:EmoteDBParser.App.Converters"
+        mc:Ignorable="d"
+        x:Class="EmoteDBParser.App.Views.MainWindow"
+        Title="Emote DB Parser"
+        Width="1220" Height="780"
+        MinWidth="860" MinHeight="520"
+        Background="#101114">
+
+    <Window.Resources>
+        <LinearGradientBrush x:Key="CardPlaceholderBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+            <GradientStop Color="#3A3F52" Offset="0" />
+            <GradientStop Color="#23252B" Offset="1" />
+        </LinearGradientBrush>
+    </Window.Resources>
+
+    <Window.Styles>
+        <Style Selector="Button.EmoteCard">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <ContentPresenter Content="{TemplateBinding Content}" />
+                </ControlTemplate>
+            </Setter>
+        </Style>
+        <Style Selector="Button.EmoteCard:pointerover Border#CardFrame">
+            <Setter Property="Opacity" Value="0.9" />
+        </Style>
+    </Window.Styles>
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <Border Grid.Row="0" Background="#17181C" Padding="16,12" BorderBrush="#26272C" BorderThickness="0,0,0,1">
+            <StackPanel Spacing="10">
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding StatusText}" Foreground="#8F9099" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding ErrorMessage}" Foreground="#FF6B6B" VerticalAlignment="Center"
+                                   IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                        <ProgressBar IsIndeterminate="True" Width="130" Height="6" IsVisible="{Binding IsBusy}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                        <Button Content="Settings" Click="OnOpenSettings" Padding="14,8" Background="#626977" Foreground="White" />
+                        <Button Content="Load Emotes" Command="{Binding LoadEmotesCommand}"
+                                Padding="18,8" Background="#4FC3F7" Foreground="#101114" FontWeight="Bold" />
+                    </StackPanel>
+                </Grid>
+
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="1" Padding="16,10" Background="#101114" IsVisible="{Binding HasResults}">
+            <TextBox Text="{Binding SearchText, Mode=TwoWay}" Watermark="Search emotes by name…"
+                     MaxWidth="360" HorizontalAlignment="Left" />
+        </Border>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto">
+
+            <ScrollViewer Grid.Column="0" Padding="12">
+                <ItemsControl ItemsSource="{Binding Emotes}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Classes="EmoteCard" Margin="6"
+                                    Command="{Binding $parent[ItemsControl].DataContext.SelectEmoteCommand}"
+                                    CommandParameter="{Binding}">
+                                <Border x:Name="CardFrame" Width="140" Height="176" CornerRadius="10"
+                                        ClipToBounds="True" BorderThickness="2"
+                                        BorderBrush="{Binding IsSelected, Converter={x:Static conv:SelectedBrushConverter.Instance}}">
+                                    <Grid>
+                                        <Border Background="#23252B" />
+                                        <Grid RowDefinitions="*,Auto">
+                                            <Panel Grid.Row="0">
+                                                <Border Background="{StaticResource CardPlaceholderBrush}"
+                                                        IsVisible="{Binding !HasIcon}" />
+                                                <TextBlock Text="{Binding Initials}" IsVisible="{Binding !HasIcon}"
+                                                           FontSize="34" FontWeight="Bold" Foreground="White"
+                                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                <Image Source="{Binding Icon}" Stretch="UniformToFill"
+                                                       IsVisible="{Binding HasIcon}" />
+                                            </Panel>
+                                            <Border Grid.Row="1" Background="#000000" Opacity="0.72" Padding="8,7">
+                                                <TextBlock Text="{Binding DisplayName}" Foreground="White"
+                                                           FontSize="12" FontWeight="SemiBold" TextWrapping="Wrap"
+                                                           TextTrimming="CharacterEllipsis" MaxLines="2" />
+                                            </Border>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <Border Grid.Column="1" Width="320" Background="#17181C" BorderBrush="#26272C"
+                    BorderThickness="1,0,0,0" IsVisible="{Binding IsDetailOpen}">
+                <DockPanel LastChildFill="True" Margin="16">
+
+                    <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+                        <TextBlock Grid.Column="0" Text="Emote Details" FontSize="16" FontWeight="Bold"
+                                   Foreground="White" VerticalAlignment="Center" />
+                        <Button Grid.Column="1" Content="✕" Command="{Binding CloseDetailCommand}" Padding="8,3" />
+                    </Grid>
+
+                    <ScrollViewer>
+                        <StackPanel Spacing="10" DataContext="{Binding SelectedEmote}">
+                            <Border Height="160" CornerRadius="8" ClipToBounds="True"
+                                    Background="{StaticResource CardPlaceholderBrush}">
+                                <Panel>
+                                    <TextBlock Text="{Binding Initials}" IsVisible="{Binding !HasIcon}"
+                                               FontSize="40" FontWeight="Bold" Foreground="White"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <Image Source="{Binding Icon}" Stretch="Uniform" IsVisible="{Binding HasIcon}" />
+                                </Panel>
+                            </Border>
+
+                            <TextBlock Text="{Binding DisplayName}" FontSize="18" FontWeight="Bold"
+                                       Foreground="White" TextWrapping="Wrap" />
+
+                            <Rectangle Height="1" Fill="#26272C" Margin="0,4" />
+
+                            <ItemsControl ItemsSource="{Binding Attributes}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="120,*" Margin="0,4">
+                                            <TextBlock Grid.Column="0" Text="{Binding Label}" Foreground="#8F9099"
+                                                       FontSize="12" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Value}" Foreground="#E4E5EA"
+                                                       FontSize="12" TextWrapping="Wrap" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+
+        </Grid>
+    </Grid>
+</Window>
