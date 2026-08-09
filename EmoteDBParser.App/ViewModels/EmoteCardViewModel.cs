@@ -4,58 +4,42 @@ using System.IO;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EmoteDBParser;
-
 namespace EmoteDBParser.App.ViewModels;
-
 public sealed class AttributeEntry
 {
     public string Label { get; }
     public string Value { get; }
-
     public AttributeEntry(string label, string? value)
     {
         Label = label;
         Value = string.IsNullOrWhiteSpace(value) ? "—" : value;
     }
 }
-
 public partial class EmoteCardViewModel : ObservableObject
 {
     public EmoteRow Row { get; }
-
     public string DisplayName => string.IsNullOrWhiteSpace(Row.Name) ? Row.Row : Row.Name!;
-
     public string Initials
     {
         get
         {
             var name = DisplayName.Trim();
-
             if (name.Length == 0)
                 return "?";
-
             var parts = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
             if (parts.Length >= 2)
                 return $"{parts[0][0]}{parts[1][0]}".ToUpperInvariant();
-
             return name[..Math.Min(2, name.Length)].ToUpperInvariant();
         }
     }
-
     public Bitmap? Icon { get; }
-
     public bool HasIcon => Icon != null;
-
     [ObservableProperty]
     private bool _isSelected;
-
     public IReadOnlyList<AttributeEntry> Attributes { get; }
-
     public EmoteCardViewModel(EmoteRow row)
     {
         Row = row;
-
         if (!string.IsNullOrEmpty(row.IconImagePath) && File.Exists(row.IconImagePath))
         {
             try
@@ -67,10 +51,8 @@ public partial class EmoteCardViewModel : ObservableObject
                 Icon = null;
             }
         }
-
         Attributes = BuildAttributes(row);
     }
-
     private static IReadOnlyList<AttributeEntry> BuildAttributes(EmoteRow row) =>
         new[]
         {

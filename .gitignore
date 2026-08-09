@@ -17,3 +17,4 @@
 *.pdb
 *.exe
 "@ | Set-Content .gitignore
+*zip
