@@ -1,0 +1,19 @@
+@"
+# .NET build output
+**/bin/
+**/obj/
+
+# Rider / JetBrains
+.idea/
+*.sln.DotSettings.user
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build artifacts
+*.dll
+*.pdb
+*.exe
+"@ | Set-Content .gitignore
